@@ -1,9 +1,10 @@
 // Importing required modules
 const { hash } = require("bcryptjs"); // bcryptjs for hashing passwords
-const Gym = require("../Modals/gym"); // Mongoose model for Gym users
+const Gym = require("../modals/gym"); // Mongoose model for Gym users
 const bcrypt = require("bcryptjs"); // Password hashing and comparing
 const crypto = require("crypto"); // For generating secure random OTP
 const nodemailer = require("nodemailer"); // For sending emails
+const jwt = require("jsonwebtoken");
 
 // ---------------- REGISTER ----------------
 exports.register = async (req, res) => {
@@ -51,6 +52,12 @@ exports.register = async (req, res) => {
   }
 };
 
+const cookieOptions = {
+  httpOnly: true,
+  secure: false,
+  sameSite: "Lax",
+};
+
 // ---------------- LOGIN ----------------
 exports.login = async (req, res) => {
   try {
@@ -61,6 +68,10 @@ exports.login = async (req, res) => {
 
     // If user found and password matches
     if (gym && (await bcrypt.compare(password, gym.password))) {
+      const token = jwt.sign({ gym_id: gym._id }, process.env.JWT_SecretKey);
+
+      res.cookie("cookie_token", token, cookieOptions);
+
       res.json({ message: "Logged in successfully", success: "true", gym });
     } else {
       // Wrong username or password
@@ -198,4 +209,10 @@ exports.resetPassword = async (req, res) => {
       error: "Server error",
     });
   }
+};
+
+exports.logout = async (req, res) => {
+  res
+    .clearCookie("cookie_token", cookieOptions)
+    .json({ message: "Logged out successfully" });
 };
