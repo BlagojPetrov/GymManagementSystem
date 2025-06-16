@@ -72,7 +72,7 @@ exports.login = async (req, res) => {
 
       res.cookie("cookie_token", token, cookieOptions);
 
-      res.json({ message: "Logged in successfully", success: "true", gym });
+      res.json({ message: "Logged in successfully", success: "true", gym, token });
     } else {
       // Wrong username or password
       res.status(400).json({ error: "Invalid credentials" });
