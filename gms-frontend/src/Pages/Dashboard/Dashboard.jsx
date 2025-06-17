@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const [accordianDashboard, setAccordianDashboard] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+
   const ref = useRef();
 
   useEffect(() => {
@@ -28,6 +30,15 @@ const Dashboard = () => {
       document.removeEventListener("mousedown", checkIfClickedOutside);
     };
   }, [accordianDashboard]);
+
+  useEffect(() => {
+    setShowPopup(true);
+    const timer = setTimeout(() => {
+      setShowPopup(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleOnClickMenu = (value) => {
     sessionStorage.setItem("func", value);
@@ -118,7 +129,14 @@ const Dashboard = () => {
 
       {/* Footer Help Message */}
       <div
-        className="md:bottom-4 p-3 w-max max-w-full mb-4 md:mb-0 absolute bg-black bg-opacity-90 text-white mt-20 rounded-lg shadow-md text-center text-sm md:text-base whitespace-nowrap left-1/2 transform -translate-x-1/2"
+        className={`md:bottom-4 p-3 w-max max-w-full mb-4 md:mb-0 absolute bg-black bg-opacity-90 text-white mt-20 rounded-lg shadow-md text-center text-sm md:text-base whitespace-nowrap left-1/2 transform -translate-x-1/2
+          transition-opacity duration-700 ease-in-out
+          ${
+            showPopup
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 -translate-y-5 pointer-events-none"
+          }
+        `}
         style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)" }}
       >
         For any technical issues, contact the developer at{" "}

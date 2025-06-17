@@ -69,6 +69,14 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/specific/:type"
+          element={
+            <PrivateRoute isLogin={isLogin}>
+              <GeneralUser />
+            </PrivateRoute>
+          }
+        />
 
         {/* Други приватни рути исто така */}
       </Routes>
