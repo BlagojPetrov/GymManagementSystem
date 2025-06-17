@@ -9,15 +9,15 @@ const Sidebar = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    sessionStorage.clear();
-    navigate('/')
+    localStorage.clear();
+    navigate("/");
   };
 
   return (
     <div className="w-1/4 min-h-screen bg-black text-white px-6 py-8 font-light">
       {/* Logo / Title */}
       <div className="text-center text-3xl font-bold tracking-wide mb-8">
-        Extreme Gym
+        {localStorage.getItem("gymName")}
       </div>
 
       {/* User Info */}
@@ -25,7 +25,7 @@ const Sidebar = () => {
         <div className="w-[80px] h-[80px] rounded-full overflow-hidden border-2 border-gray-600">
           <img
             className="w-full h-full object-cover"
-            src="https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            src={localStorage.getItem("gymPic")}
             alt="gym pic"
           />
         </div>

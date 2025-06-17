@@ -1,13 +1,27 @@
 import "./index.css";
 import "./App.css";
 import Home from "./Pages/Home/Home";
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useNavigate,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import { useState, useEffect } from "react";
 import Member from "./Pages/Member/Member";
 import GeneralUser from "./Pages/GeneralUser/GeneralUser";
 import MemberDetail from "./Pages/MemberDetail/MemberDetail";
+import "react-toastify/dist/ReactToastify.css";
+
+const PrivateRoute = ({ isLogin, children }) => {
+  if (!isLogin) {
+    return <Navigate to="/" replace />;
+  }
+  return children;
+};
 
 function App() {
   const navigate = useNavigate();
@@ -15,10 +29,10 @@ function App() {
   const [isLogin, setIsLogin] = useState(null);
 
   useEffect(() => {
-    const isLoggedIn = sessionStorage.getItem("isLogin") === "true";
+    let isLoggedIn = localStorage.getItem("isLogin") === "true";
     setIsLogin(isLoggedIn);
   }, []);
-  
+
   // Dokolku se dodavaat drugi strani, treba da se stavat vo sidebarRoutes!!!
   const sidebarRoutes = ["/dashboard", "/member", "/specific"];
   const showSidebar =
@@ -31,10 +45,32 @@ function App() {
       {showSidebar && <Sidebar />}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/member" element={<Member />} />
-        <Route path="/specific/:page" element={<GeneralUser />} />
-        <Route path="/member/:id" element={<MemberDetail />} />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute isLogin={isLogin}>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/member"
+          element={
+            <PrivateRoute isLogin={isLogin}>
+              <Member />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/member/:id"
+          element={
+            <PrivateRoute isLogin={isLogin}>
+              <MemberDetail />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Други приватни рути исто така */}
       </Routes>
     </div>
   );

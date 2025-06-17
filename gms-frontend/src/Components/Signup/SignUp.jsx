@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const SignUp = () => {
   const [inputField, setInputField] = useState({
@@ -39,6 +40,20 @@ const SignUp = () => {
         console.log("Image upload failed:", err);
       }
     }
+  };
+
+  const handleRegister = async () => {
+    await axios
+      .post("http://localhost:4000/auth/register", inputField)
+      .then((resp) => {
+        const successMsg = resp.data.message;
+        toast.success(successMsg);
+      })
+      .catch((err) => {
+        const errorMessage = err.response.data.error;
+        // console.log(errorMessage);
+        toast.error(errorMessage);
+      });
   };
 
   return (
@@ -84,9 +99,13 @@ const SignUp = () => {
         alt="Upload preview"
         className="w-10 h-10 opacity-50 mx-auto mb-4"
       />
-      <div className="w-full font-sans text-white text-lg text-center bg-slate-800 py-2 rounded cursor-pointer hover:bg-slate-700 transition">
+      <div
+        className="w-full font-sans text-white text-lg text-center bg-slate-800 py-2 rounded cursor-pointer hover:bg-slate-700 transition"
+        onClick={() => handleRegister()}
+      >
         Register
       </div>
+      <ToastContainer />
     </div>
   );
 };

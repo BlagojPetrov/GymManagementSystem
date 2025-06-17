@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const ForgotPassword = () => {
   const [emailSubmit, setEmailSubmit] = useState(false);
@@ -12,12 +14,60 @@ const ForgotPassword = () => {
 
   const handleSubmit = () => {
     if (!emailSubmit) {
-      setEmailSubmit(true);
-      setContentValue("Submit OTP");
+      sendOtp();
     } else if (emailSubmit && !otpValidate) {
-      setOtpValidate(true);
-      setContentValue("Submit new password");
+      verifyOTP();
+    } else {
+      changePassword();
     }
+  };
+
+  const changePassword = async () => {
+    await axios
+      .post("http://localhost:4000/auth/reset-password", {
+        email: inputField.email,
+        newPassword: inputField.newPassword,
+      })
+      .then((response) => {
+        toast.success(response.data.message);
+      })
+      .catch((err) => {
+        toast.error("Some technical issue while sending email");
+        console.log(err);
+      });
+  };
+
+  const verifyOTP = async () => {
+    await axios
+      .post("http://localhost:4000/auth/reset-password/checkOtp", {
+        email: inputField.email,
+        otp: inputField.otp,
+      })
+      .then((response) => {
+        setOtpValidate(true);
+        setContentValue("Submit new password");
+        toast.success(response.data.message);
+      })
+      .catch((err) => {
+        toast.error("Some technical issue while sending email");
+        console.log(err);
+      });
+  };
+
+  const sendOtp = async () => {
+    await axios
+      .post("http://localhost:4000/auth/reset-password/sendOtp", {
+        email: inputField.email,
+      })
+      .then((response) => {
+        setEmailSubmit(true);
+        setContentValue("Submit OTP");
+        toast.success(response.data.message);
+      })
+      .catch((err) => {
+        toast.error("Some technical issue while sending email");
+        console.log(err);
+      });
   };
 
   const handleOnChange = (event, name) => {
@@ -81,6 +131,7 @@ const ForgotPassword = () => {
       >
         {contentVal}
       </div>
+      <ToastContainer />
     </div>
   );
 };

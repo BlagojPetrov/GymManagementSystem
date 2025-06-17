@@ -2,13 +2,33 @@ import React, { useState } from "react";
 import Modal from "../Modal/Modal";
 import ForgotPassword from "../ForgotPassword/ForgotPassword";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 const Login = () => {
   const [loginField, setLoginField] = useState({ userName: "", password: "" });
   const navigate = useNavigate();
-  const handleLogin = () => {
-    sessionStorage.setItem("isLogin", true);
-    navigate("/dashboard");
+  const handleLogin = async () => {
+    // sessionStorage.setItem("isLogin", true);
+    // navigate("/dashboard");
+
+    await axios
+      .post("http://localhost:4000/auth/login", loginField, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response.data);
+        localStorage.setItem("gymName", response.data.gym.gymName);
+        localStorage.setItem("gymPic", response.data.gym.profilePic);
+        localStorage.setItem("isLogin", "true");
+        localStorage.setItem("token", response.data.token);
+        navigate("/dashboard");
+      })
+      .catch((err) => {
+        const errorMessage = err.response.data.error;
+        // console.log(errorMessage);
+        toast.error(errorMessage);
+      });
   };
   const [forgotPassword, setForgotPassword] = useState(false);
 
@@ -41,7 +61,6 @@ const Login = () => {
         }}
         type="password"
         placeholder="Password"
-        S
         className="w-full mb-4 p-2 border border-gray-400 rounded"
       />
 
@@ -68,6 +87,7 @@ const Login = () => {
       >
         Submit
       </div>
+      <ToastContainer />
     </div>
   );
 };

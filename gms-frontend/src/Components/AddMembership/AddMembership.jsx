@@ -1,50 +1,66 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { FaRegCalendarAlt, FaEuroSign, FaPlus } from "react-icons/fa";
+import { toast, ToastContainer } from "react-toastify";
 
-const memberships = [
-  { duration: "1 Month", price: "20€" },
-  { duration: "2 Months", price: "35€" },
-  { duration: "3 Months", price: "45€" },
-  { duration: "4 Months", price: "50€" },
-];
-
-const AddMembership = () => {
+const AddMembership = ({ handleClose }) => {
   const [inputField, setInputField] = useState({ months: "", price: "" });
+  const [membership, setMembership] = useState([]);
 
   const handleOnChange = (event, name) => {
     setInputField({ ...inputField, [name]: event.target.value });
   };
 
-  const handleAddPlan = () => {
-    if (!inputField.months || !inputField.price) {
-      alert("Please fill in both fields.");
-      return;
-    }
+  const fetchMembership = async () => {
+    await axios
+      .get("http://localhost:4000/plans/get-membership", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res);
+        setMembership(res.data.membership);
+        toast.success(res.data.membership.length + " Membership Fetched");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Something wrong happend");
+      });
+  };
 
-    if (parseInt(inputField.months) <= 0 || parseFloat(inputField.price) <= 0) {
-      alert("Values must be greater than 0");
-      return;
-    }
+  useEffect(() => {
+    fetchMembership();
+  }, []);
 
-    console.log("Custom plan added:", inputField);
-    setInputField({ months: "", price: "" });
+  const handleAddPlan = async () => {
+    await axios
+      .post("http://localhost:4000/plans/add-membership", inputField, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        toast.success(response.data.message);
+        handleClose();
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Something wrong happend");
+      });
   };
 
   return (
     <div className="text-black p-6 w-full max-w-md mx-auto bg-white rounded-xl shadow-lg">
       {/* Membership Cards */}
       <div className="grid grid-cols-2 gap-4 mb-6">
-        {memberships.map((membership, index) => (
+        {membership.map((item, index) => (
           <div
             key={index}
             className="bg-white border border-gray-300 px-4 py-4 rounded-lg shadow-sm text-center flex flex-col items-center justify-center transition hover:border-blue-500 hover:shadow-lg hover:scale-[1.03] cursor-pointer"
           >
             <FaRegCalendarAlt className="text-blue-500 text-2xl mb-1" />
             <span className="text-sm font-medium text-gray-700">
-              {membership.duration}
+              {item.months} месец{item.months > 1 ? "и" : ""}
             </span>
             <span className="text-green-600 font-bold mt-1 text-base">
-              {membership.price}
+              {item.price} денари
             </span>
           </div>
         ))}
@@ -80,14 +96,15 @@ const AddMembership = () => {
           />
         </div>
 
-        <button
+        <div
           onClick={handleAddPlan}
           className="w-full mt-3 bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center justify-center gap-2"
         >
           <FaPlus />
           Add Plan
-        </button>
+        </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
