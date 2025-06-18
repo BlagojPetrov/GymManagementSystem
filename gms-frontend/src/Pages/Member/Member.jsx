@@ -127,29 +127,30 @@ const Member = () => {
       }
     }
   };
-  return (
+   return (
     <div className="text-black p-5 w-3/4">
-      {/* Block for banner */}
+      {/* Банер секција */}
       <div className="border-2 bg-slate-900 flex justify-between w-full text-white rounded-lg p-3">
         <div
           className="border-2 pl-3 pr-3 pt-1 pb-1 rounded-2xl cursor-pointer hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600"
           onClick={() => handleMember()}
         >
-          Add member <FitnessCenterIcon />
+          Додај член <FitnessCenterIcon />
         </div>
         <div
           className="border-2 pl-3 pr-3 pt-1 pb-1 rounded-2xl cursor-pointer hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600"
           onClick={() => handleMemberShip()}
         >
-          Membership <AddIcon />
+          Членарина <AddIcon />
         </div>
       </div>
 
-      {/* Block for back to dashboard button */}
+      {/* Копче за назад кон контролна табла */}
       <Link to={"/dashboard"}>
-        {" "}
-        <ArrowBackIcon /> Back to Dashboard{" "}
+        <ArrowBackIcon /> Назад
       </Link>
+
+      {/* Пребарување */}
       <div className="mt-5 w-1/2 flex gap-2">
         <input
           type="text"
@@ -158,7 +159,7 @@ const Member = () => {
             setSearch(e.target.value);
           }}
           className="border-2 w-full p-2 rounded-lg"
-          placeholder="Search by name or phone number"
+          placeholder="Пребарај по име или телефонски број"
         />
         <div
           onClick={() => {
@@ -169,12 +170,14 @@ const Member = () => {
           <SearchIcon />
         </div>
       </div>
+
+      {/* Инфо за членови и пагинација */}
       <div className="mt-5 text-xl flex justify-between text-slate-900">
-        <div>Total Members {isSearchModeOn ? totalData : null}</div>
+        <div>Вкупно членови {isSearchModeOn ? totalData : null}</div>
         {!isSearchModeOn ? (
           <div className="flex gap-5">
             <div>
-              {startFrom + 1} - {endTo} of {totalData} Members
+              {startFrom + 1} - {endTo} од {totalData} членови
             </div>
             <div
               className={`w-8 h-8 cursor-pointer border-2 flex items-center justify-center hover:text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 ${
@@ -199,22 +202,27 @@ const Member = () => {
           </div>
         ) : null}
       </div>
+
+      {/* Приказ на членови */}
       <div className="bg-slate-100 p-5 mt-5 rounded-lg grid gap-2 grid-cols-3 overflow-x-auto h-[65%]">
         {data.map((item, index) => {
           return <MemberCard item={item} />;
         })}
       </div>
+
+      {/* Модал за членарини */}
       {addMembership && (
         <Modal
-          header="Membership Plans"
+          header="Планови за членарина"
           handleClose={handleMemberShip}
           content={<AddMembership handleClose={handleMemberShip} />}
         />
       )}
 
+      {/* Модал за додавање член */}
       {addMember && (
         <Modal
-          header="Register New Member"
+          header="Регистрирај нов член"
           handleClose={handleMember}
           content={<AddMember />}
         />

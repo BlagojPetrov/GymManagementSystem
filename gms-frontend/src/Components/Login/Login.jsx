@@ -8,10 +8,8 @@ import { toast, ToastContainer } from "react-toastify";
 const Login = () => {
   const [loginField, setLoginField] = useState({ userName: "", password: "" });
   const navigate = useNavigate();
-  const handleLogin = async () => {
-    // sessionStorage.setItem("isLogin", true);
-    // navigate("/dashboard");
 
+  const handleLogin = async () => {
     await axios
       .post("http://localhost:4000/auth/login", loginField, {
         withCredentials: true,
@@ -26,10 +24,10 @@ const Login = () => {
       })
       .catch((err) => {
         const errorMessage = err.response.data.error;
-        // console.log(errorMessage);
         toast.error(errorMessage);
       });
   };
+
   const [forgotPassword, setForgotPassword] = useState(false);
 
   const handleClose = () => {
@@ -43,7 +41,7 @@ const Login = () => {
   return (
     <div className="w-1/3 p-10 mt-20 ml-20 bg-white/70 rounded-lg shadow-lg h-fit">
       <div className="font-sans text-slate-800 text-center text-3xl mb-6">
-        Login
+        Најава
       </div>
       <input
         value={loginField.userName}
@@ -51,7 +49,7 @@ const Login = () => {
           handleOnChange(event, "userName");
         }}
         type="text"
-        placeholder="Username"
+        placeholder="Корисничко име"
         className="w-full mb-4 p-2 border border-gray-400 rounded"
       />
       <input
@@ -60,7 +58,7 @@ const Login = () => {
           handleOnChange(event, "password");
         }}
         type="password"
-        placeholder="Password"
+        placeholder="Лозинка"
         className="w-full mb-4 p-2 border border-gray-400 rounded"
       />
 
@@ -69,11 +67,11 @@ const Login = () => {
         className="text-right text-sm text-blue-600 hover:underline cursor-pointer mb-4"
         onClick={() => handleClose()}
       >
-        Forgot password?
+        Заборавена лозинка?
       </div>
       {forgotPassword && (
         <Modal
-          header="Forgot Password"
+          header="Заборавена лозинка"
           handleClose={handleClose}
           content={<ForgotPassword />}
         />
@@ -85,7 +83,7 @@ const Login = () => {
           handleLogin();
         }}
       >
-        Submit
+        Потврди
       </div>
       <ToastContainer />
     </div>

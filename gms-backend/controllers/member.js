@@ -320,12 +320,31 @@ exports.updateMemberPlan = async (req, res) => {
 
       await member.save();
       res.status(200).json({ message: "Member renewed successfully", member });
-      
     } else {
       return res.status(400).json({ error: "No such membership are there" });
     }
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Server error" });
+  }
+};
+
+exports.deleteMember = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deleted = await Member.findOneAndDelete({
+      _id: id,
+      gym: req.gym._id,
+    });
+
+    if (!deleted) {
+      return res.status(404).json({ error: "Членот не е пронајден." });
+    }
+
+    res.status(200).json({ message: "Членот е успешно избришан." });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Серверска грешка при бришење на членот." });
   }
 };

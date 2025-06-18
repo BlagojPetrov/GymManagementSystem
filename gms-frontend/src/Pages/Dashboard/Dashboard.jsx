@@ -47,37 +47,37 @@ const Dashboard = () => {
   const cardData = [
     {
       icon: <GroupIcon sx={{ color: "green", fontSize: "50px" }} />,
-      label: "Joined Members",
+      label: "Приклучени Членови",
       path: "/member",
       storageValue: "joinedMembers",
     },
     {
       icon: <SignalCellularAltIcon sx={{ color: "blue", fontSize: "50px" }} />,
-      label: "Monthly Joined",
+      label: "Месечно Приклучени",
       path: "/specific/monthly",
       storageValue: "monthly",
     },
     {
       icon: <AccessAlarmIcon sx={{ color: "red", fontSize: "50px" }} />,
-      label: "Expiring within 3 days",
+      label: "Истекуваат за 3 дена",
       path: "/specific/expiring-3days",
       storageValue: "expiring3days",
     },
     {
       icon: <AccessAlarmIcon sx={{ color: "orange", fontSize: "50px" }} />,
-      label: "Expiring within 4-7 days",
+      label: "Истекуваат за 4-7 дена",
       path: "/specific/expiring-4-7days",
       storageValue: "expiring4to7days",
     },
     {
       icon: <ErrorIcon sx={{ color: "red", fontSize: "50px" }} />,
-      label: "Expired",
+      label: "Истечени",
       path: "/specific/expired",
       storageValue: "expired",
     },
     {
       icon: <ReportIcon sx={{ color: "brown", fontSize: "50px" }} />,
-      label: "Inactive members",
+      label: "Неактивни членови",
       path: "/specific/inactive",
       storageValue: "inactive",
     },
@@ -101,10 +101,10 @@ const Dashboard = () => {
           className="absolute p-4 bg-slate-900 text-white rounded-xl text-base font-light mt-2 z-40 shadow-md"
         >
           <div className="mb-1 font-semibold">
-            Welcome to Gym Management System!
+            Добредојдовте во системот за управување со фитнес центар!
           </div>
           <p className="text-sm">
-            Feel free to ask any questions or explore the dashboard.
+            Слободно прашајте било какви прашања или разгледајте го панелот.
           </p>
         </div>
       )}
@@ -139,7 +139,7 @@ const Dashboard = () => {
         `}
         style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)" }}
       >
-        For any technical issues, contact the developer at{" "}
+        За технички проблеми контактирајте developer на{" "}
         <a
           href="tel:+070123456"
           className="hover:text-gray-400 underline transition-colors duration-200"

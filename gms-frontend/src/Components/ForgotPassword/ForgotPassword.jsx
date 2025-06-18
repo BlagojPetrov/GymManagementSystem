@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 const ForgotPassword = () => {
   const [emailSubmit, setEmailSubmit] = useState(false);
   const [otpValidate, setOtpValidate] = useState(false);
-  const [contentVal, setContentValue] = useState("Submit");
+  const [contentVal, setContentValue] = useState("Потврди");
   const [inputField, setInputField] = useState({
     email: "",
     otp: "",
@@ -22,53 +22,53 @@ const ForgotPassword = () => {
     }
   };
 
-  const changePassword = async () => {
-    await axios
-      .post("http://localhost:4000/auth/reset-password", {
-        email: inputField.email,
-        newPassword: inputField.newPassword,
-      })
-      .then((response) => {
-        toast.success(response.data.message);
-      })
-      .catch((err) => {
-        toast.error("Some technical issue while sending email");
-        console.log(err);
-      });
-  };
+const changePassword = async () => {
+  await axios
+    .post("http://localhost:4000/auth/reset-password", {
+      email: inputField.email,
+      newPassword: inputField.newPassword,
+    })
+    .then(() => {
+      toast.success("Успешно ја променивте лозинката.");
+    })
+    .catch((err) => {
+      toast.error("Техничка грешка при менување на лозинката.");
+      console.log(err);
+    });
+};
 
-  const verifyOTP = async () => {
-    await axios
-      .post("http://localhost:4000/auth/reset-password/checkOtp", {
-        email: inputField.email,
-        otp: inputField.otp,
-      })
-      .then((response) => {
-        setOtpValidate(true);
-        setContentValue("Submit new password");
-        toast.success(response.data.message);
-      })
-      .catch((err) => {
-        toast.error("Some technical issue while sending email");
-        console.log(err);
-      });
-  };
+const verifyOTP = async () => {
+  await axios
+    .post("http://localhost:4000/auth/reset-password/checkOtp", {
+      email: inputField.email,
+      otp: inputField.otp,
+    })
+    .then(() => {
+      setOtpValidate(true);
+      setContentValue("Потврди нова лозинка");
+      toast.success("OTP кодот е успешно потврден.");
+    })
+    .catch((err) => {
+      toast.error("Погрешен OTP код или техничка грешка.");
+      console.log(err);
+    });
+};
 
-  const sendOtp = async () => {
-    await axios
-      .post("http://localhost:4000/auth/reset-password/sendOtp", {
-        email: inputField.email,
-      })
-      .then((response) => {
-        setEmailSubmit(true);
-        setContentValue("Submit OTP");
-        toast.success(response.data.message);
-      })
-      .catch((err) => {
-        toast.error("Some technical issue while sending email");
-        console.log(err);
-      });
-  };
+const sendOtp = async () => {
+  await axios
+    .post("http://localhost:4000/auth/reset-password/sendOtp", {
+      email: inputField.email,
+    })
+    .then(() => {
+      setEmailSubmit(true);
+      setContentValue("Потврди OTP");
+      toast.success("Испратен е OTP код на вашата е-пошта.");
+    })
+    .catch((err) => {
+      toast.error("Не успеавме да испратиме OTP код.");
+      console.log(err);
+    });
+};
 
   const handleOnChange = (event, name) => {
     setInputField((prev) => ({
@@ -82,14 +82,14 @@ const ForgotPassword = () => {
   return (
     <div className="w-full">
       <div className="w-full">
-        <div>Please enter your email</div>
+        <div>Внесете ја вашата е-пошта</div>
         <input
           value={inputField.email}
           onChange={(event) => {
             handleOnChange(event, "email");
           }}
           type="email"
-          placeholder="Email"
+          placeholder="Е-пошта"
           autoComplete="email"
           className="w-full mb-4 p-2 border border-gray-400 rounded"
         />
@@ -97,7 +97,7 @@ const ForgotPassword = () => {
 
       {emailSubmit && (
         <div className="w-full">
-          <div>Enter your OTP</div>
+          <div>Внесете го OTP кодот</div>
           <input
             value={inputField.otp}
             onChange={(event) => {
@@ -112,14 +112,14 @@ const ForgotPassword = () => {
 
       {otpValidate && (
         <div className="w-full">
-          <div>Enter your new password</div>
+          <div>Внесете ја новата лозинка</div>
           <input
             value={inputField.newPassword}
             onChange={(event) => {
               handleOnChange(event, "newPassword");
             }}
             type="password"
-            placeholder="New password"
+            placeholder="Нова лозинка"
             className="w-full mb-4 p-2 border border-gray-400 rounded"
           />
         </div>

@@ -19,11 +19,11 @@ const AddMembership = ({ handleClose }) => {
       .then((res) => {
         console.log(res);
         setMembership(res.data.membership);
-        toast.success(res.data.membership.length + " Membership Fetched");
+        toast.success(res.data.membership.length + " членства преземени");
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Something wrong happend");
+        toast.error("Настана грешка");
       });
   };
 
@@ -42,7 +42,7 @@ const AddMembership = ({ handleClose }) => {
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Something wrong happend");
+        toast.error("Настана грешка");
       });
   };
 
@@ -70,7 +70,7 @@ const AddMembership = ({ handleClose }) => {
 
       {/* Custom Plan */}
       <h3 className="text-lg font-semibold mb-4 text-center text-slate-800">
-        Add Custom Plan
+        Додади нов план
       </h3>
 
       <div className="space-y-3">
@@ -80,7 +80,7 @@ const AddMembership = ({ handleClose }) => {
             value={inputField.months}
             onChange={(event) => handleOnChange(event, "months")}
             type="number"
-            placeholder="Enter duration (e.g. 6 Months)"
+            placeholder="Внеси траење (на пример 6 месеци)"
             className="w-full pl-10 pr-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
           />
         </div>
@@ -91,17 +91,17 @@ const AddMembership = ({ handleClose }) => {
             value={inputField.price}
             onChange={(event) => handleOnChange(event, "price")}
             type="number"
-            placeholder="Enter price (e.g. 60€)"
+            placeholder="Внеси цена"
             className="w-full pl-10 pr-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
           />
         </div>
 
         <div
           onClick={handleAddPlan}
-          className="w-full mt-3 bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center justify-center gap-2"
+          className="w-full mt-3 bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center justify-center gap-2 cursor-pointer"
         >
           <FaPlus />
-          Add Plan
+          Додади план
         </div>
       </div>
       <ToastContainer />

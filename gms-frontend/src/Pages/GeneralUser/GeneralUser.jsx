@@ -14,6 +14,7 @@ import {
 const GeneralUser = () => {
   const [header, setHeader] = useState("");
   const [data, setData] = useState([]);
+  
   useEffect(() => {
     const func = sessionStorage.getItem("func");
     functionCall(func);
@@ -22,45 +23,46 @@ const GeneralUser = () => {
   const functionCall = async (func) => {
     switch (func) {
       case "monthly":
-        setHeader("Monthly Joined Members");
+        setHeader("Месечно приклучени членови");
         var datas = await getMonthlyJoined();
         setData(datas.members);
-        console.log("Received data:", datas);
+        console.log("Добиени податоци:", datas);
         break;
 
       case "expiring3days":
-        setHeader("Expiring In 3 Days Members");
+        setHeader("Членови кои истекуваат за 3 дена");
         var datas = await threeDayExpire();
         setData(datas.members);
         break;
 
       case "expiring4to7days":
-        setHeader("Expiring In 4-7 Days Members");
+        setHeader("Членови кои истекуваат за 4-7 дена");
         var datas = await fourToSevenDaysExpire();
         setData(datas.members);
         break;
 
       case "expired":
-        setHeader("Expired Members");
+        setHeader("Истечени членови");
         var datas = await expired();
         setData(datas.members);
         break;
 
       case "inactive":
-        setHeader("Inactive Members");
+        setHeader("Неактивни членови");
         var datas = await inactiveMembers();
         setData(datas.member);
         break;
     }
   };
+
   return (
     <div className="text-black p-5 w-3/4 flex-col">
       <div className="border-2 bg-slate-900 flex justify-between w-full text-white rounded-lg p-3">
         <Link
           to={"/dashboard"}
-          className="border-2 pl-3 pr-3 pt-1 rounded-2xl cursor-pointer hover:bg-gradient-to-r  hover:from-blue-500 hover:to-purple-600"
+          className="border-2 pl-3 pr-3 pt-1 rounded-2xl cursor-pointer hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600"
         >
-          <ArrowBackIcon /> Back to Dashboard
+          <ArrowBackIcon /> Назад
         </Link>
       </div>
 

@@ -17,7 +17,7 @@ const MemberCard = ({ item }) => {
       <div className="mx-auto mt-5 text-center text-xl">{item?.name}</div>
       <div className="mx-auto text-center">{"+389 " + item?.mobileNo}</div>
       <div className="mx-auto text-center">
-        Next bill date: {item?.nextBillDate.slice(0, 10).split("-").reverse().join("-")}
+        Следна сметка: {item?.nextBillDate.slice(0, 10).split("-").reverse().join("-")}
       </div>
     </Link>
   );

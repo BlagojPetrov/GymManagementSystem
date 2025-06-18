@@ -43,7 +43,6 @@ const MemberDetail = () => {
         console.log(response);
         setData(response.data.member);
         setStatus(response.data.member.status);
-        toast.success(response.data.message);
       })
       .catch((err) => {
         console.log(err);
@@ -92,7 +91,6 @@ const MemberDetail = () => {
       )
       .then((response) => {
         setData(response.data.member);
-        toast.success(response.data.message);
       })
       .catch((err) => {
         toast.error("Something went wrong");
@@ -100,94 +98,130 @@ const MemberDetail = () => {
       });
   };
 
+  const handleDeleteMember = async () => {
+    const confirmDelete = window.confirm(
+      "Дали сте сигурни дека сакате да го избришете овој член?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      await axios.delete(`http://localhost:4000/members/delete-member/${id}`, {
+        withCredentials: true,
+      });
+      toast.success("Членот е успешно избришан.");
+
+      setTimeout(() => {
+        navigate("/member");
+      }, 1500);
+    } catch (error) {
+      console.log(error);
+      toast.error("Настана грешка при бришење на членот.");
+    }
+  };
+
   return (
-    <div className="w-3/4 text-black p-5">
-      <div
-        className="border-2 w-fit text-base font-sans text-white p-1.5 rounded-lg bg-slate-900 cursor-pointer
-             transition-colors duration-300 hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-700 flex items-center"
-        onClick={() => {
-          navigate(-1);
-        }}
+    <div className="w-full md:w-3/4 p-6 text-black">
+      {/* Back button */}
+      <button
+        onClick={() => navigate(-1)}
+        className="flex items-center gap-2 px-4 py-2 mb-6 bg-slate-800 text-white rounded hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-700 transition"
       >
-        <ArrowBackIcon className="mr-1" fontSize="small" />
-        Back
-      </div>
-      <div className="mt-10 p-2">
-        <div className="w=[100%] h-fit flex">
-          <div className="w-1/3 mx-auto">
+        <ArrowBackIcon fontSize="small" />
+        Назад
+      </button>
+
+      {data && (
+        <div className="bg-white rounded-lg shadow-md p-6 grid md:grid-cols-2 gap-8">
+          {/* Profile Image */}
+          <div className="w-full flex justify-center items-start">
             <img
-              src={data?.profilePic}
-              alt="profile"
-              className="w-full mx-auto"
+              src={data.profilePic}
+              alt="Профил"
+              className="w-64 h-64 rounded-xl object-cover border border-gray-300"
             />
           </div>
-          <div className="w-2/3 mt-5 text-xl p-5">
-            <div className="mt-1 mb-2 text-2xl">Name: {data?.name}</div>
-            <div className="mt-1 mb-2 text-2xl">
-              Mobile: +389 {data?.mobileNo}
-            </div>
-            <div className="mt-1 mb-2 text-2xl">Adress: {data?.address}</div>
-            <div className="mt-1 mb-2 text-2xl">
-              Joined Date:{" "}
-              {data?.createdAt.slice(0, 10).split("-").reverse().join("-")}
-            </div>
-            <div className="mt-1 mb-2 text-2xl">
-              Next Bill Date:{" "}
-              {data?.nextBillDate.slice(0, 10).split("-").reverse().join("-")}
-            </div>
-            <div className="mt-1 mb-2 flex gap-4 text-2xl">
-              Status{" "}
+
+          {/* Info */}
+          <div className="space-y-4">
+            <h2 className="text-3xl font-bold mb-4">{data.name}</h2>
+            <p className="text-lg">
+              <strong>Телефон:</strong> +389 {data.mobileNo}
+            </p>
+            <p className="text-lg">
+              <strong>Адреса:</strong> {data.address}
+            </p>
+            <p className="text-lg">
+              <strong>Зачленување:</strong>{" "}
+              {data.createdAt.slice(0, 10).split("-").reverse().join("-")}
+            </p>
+            <p className="text-lg">
+              <strong>Следна уплата:</strong>{" "}
+              {data.nextBillDate.slice(0, 10).split("-").reverse().join("-")}
+            </p>
+
+            {/* Status Switch */}
+            <div className="flex items-center gap-4 mt-4">
+              <span className="text-lg font-medium">Статус:</span>
               <Switch
-                onColor="#6366F1"
                 checked={status === "Active"}
                 onChange={handleSwitchBtn}
               />
-            </div>
-            {isDateInPast(data?.nextBillDate) && (
-              <div
-                className={`mt-1 rounded-lg p-3 border-2 border-slate-900 text-center ${
-                  renew && status === "Active"
-                    ? "bg-gradient-to-r from-blue-600 to-purple-700 text-white"
-                    : ""
-                } w-full md:w-1/2 cursor-pointer hover:text-white hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-700 flex items-center justify-center transition-colors duration-300`}
-                onClick={() => {
-                  setRenew((prev) => !prev);
-                }}
+              <span
+                className={`text-sm px-3 py-1 rounded-full ${
+                  status === "Active"
+                    ? "bg-green-100 text-green-700"
+                    : "bg-yellow-100 text-yellow-700"
+                }`}
               >
-                Renew
-              </div>
-            )}
-            {renew && status === "Active" ? (
-              <div className="rounded-lg p-3 mt-5 mb-5 h-fit bg-slate-50 md:w-[100%]">
-                <div className="w-full">
-                  <div className="my-5">
-                    <div>Membership</div>
+                {status}
+              </span>
+            </div>
+
+            {/* Renew Membership */}
+            {isDateInPast(data.nextBillDate) && status === "Active" && (
+              <>
+                <button
+                  onClick={() => setRenew(!renew)}
+                  className="mt-4 w-full md:w-1/2 bg-gradient-to-r from-blue-600 to-purple-700 text-white py-2 rounded hover:opacity-90 transition"
+                >
+                  Обнови членарина
+                </button>
+
+                {renew && (
+                  <div className="mt-4 bg-slate-50 p-4 rounded-lg border">
+                    <label className="block mb-2 text-sm font-medium">
+                      Избери план
+                    </label>
                     <select
                       value={planMember}
-                      onChange={handleOnChangeSelect}
-                      className="w-full border-2 p-2 rounded-lg"
+                      onChange={(e) => setPlanMember(e.target.value)}
+                      className="w-full border-2 rounded p-2 mb-4"
                     >
-                      {membership.map((item, index) => {
-                        return (
-                          <option key={index} value={item._id}>
-                            {item.months} Month Plan
-                          </option>
-                        );
-                      })}
+                      {membership.map((item, idx) => (
+                        <option key={idx} value={item._id}>
+                          {item.months} месечен план
+                        </option>
+                      ))}
                     </select>
-                    <div
+                    <button
                       onClick={handleRenewSaveBtn}
-                      className={`mt-3 rounded-lg p-3 border-2 border-slate-900 text-center w-1/2 mx-auto cursor-pointer hover:text-white hover:bg-gradient-to-r  hover:from-blue-600 hover:to-purple-700 flex items-center justify-center transition-colors duration-300`}
+                      className="w-full bg-gradient-to-r from-blue-600 to-purple-700 text-white py-2 rounded hover:opacity-90 transition"
                     >
-                      Save
-                    </div>
+                      Зачувај
+                    </button>
                   </div>
-                </div>
-              </div>
-            ) : null}
+                )}
+              </>
+            )}
+            <button
+              onClick={handleDeleteMember}
+              className="mt-6 w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 rounded-lg transition-all"
+            >
+              Избриши член
+            </button>
           </div>
         </div>
-      </div>
+      )}
       <ToastContainer />
     </div>
   );

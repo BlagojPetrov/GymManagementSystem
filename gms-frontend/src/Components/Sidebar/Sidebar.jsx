@@ -30,8 +30,8 @@ const Sidebar = () => {
           />
         </div>
         <div>
-          <div className="text-lg text-gray-300">Welcome back!</div>
-          <div className="text-xl font-semibold">Admin</div>
+          <div className="text-lg text-gray-300">Добредојдовте назад!</div>
+          <div className="text-xl font-semibold">Админ</div>
         </div>
       </div>
 
@@ -46,7 +46,7 @@ const Sidebar = () => {
           }`}
         >
           <HomeIcon className="text-white" />
-          <div>Dashboard</div>
+          <div>Почетна</div>
         </Link>
 
         <Link
@@ -58,7 +58,7 @@ const Sidebar = () => {
           }`}
         >
           <GroupIcon className="text-white" />
-          <div>Members</div>
+          <div>Членови</div>
         </Link>
 
         <div
@@ -68,7 +68,7 @@ const Sidebar = () => {
           className="flex items-center gap-3 mt-5 text-lg font-medium bg-slate-800 px-4 py-3 rounded-lg cursor-pointer transition hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600"
         >
           <LogoutIcon className="text-white" />
-          <div>Logout</div>
+          <div>Одјави се</div>
         </div>
       </div>
     </div>

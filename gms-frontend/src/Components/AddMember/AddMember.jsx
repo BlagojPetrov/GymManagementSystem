@@ -16,7 +16,8 @@ const AddMember = () => {
     mobileNo: "",
     address: "",
     membership: "",
-    profilePic: "https://th.bing.com/th/id/OIP.gj6t3grz5no6UZ03uIluiwHaHa?rs=1&pid=ImgDetMain",
+    profilePic:
+      "https://th.bing.com/th/id/OIP.gj6t3grz5no6UZ03uIluiwHaHa?rs=1&pid=ImgDetMain",
     joiningDate: "",
   });
 
@@ -36,10 +37,13 @@ const AddMember = () => {
     data.append("upload_preset", "gym-management");
 
     try {
-      const response = await axios.post("https://api.cloudinary.com/v1_1/djww3vhc9/image/upload", data);
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/djww3vhc9/image/upload",
+        data
+      );
       console.log(response);
       const imageUrl = response.data.url;
-      setInputField({ ...inputField, ['profilePic']: imageUrl})
+      setInputField({ ...inputField, ["profilePic"]: imageUrl });
     } catch (err) {
       console.log(err);
     }
@@ -53,7 +57,7 @@ const AddMember = () => {
       .then((response) => {
         setMembershipList(response.data.membership);
         if (response.data.membership.length === 0) {
-          return toast.error("No any membership added yet", {
+          return toast.error("Сè уште нема додадено членство", {
             className: "text-lg",
           });
         } else {
@@ -64,7 +68,7 @@ const AddMember = () => {
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Something wrong happend");
+        toast.error("Настана грешка");
       });
   };
 
@@ -85,14 +89,14 @@ const AddMember = () => {
         withCredentials: true,
       })
       .then((response) => {
-        toast.success("Added successfully");
+        toast.success("Успешно додаден член");
         setTimeout(() => {
           window.location.reload();
         }, 2000);
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Something wrong happend");
+        toast.error("Настана грешка");
       });
   };
 
@@ -106,7 +110,7 @@ const AddMember = () => {
             value={inputField.name}
             onChange={(event) => handleOnChange(event, "name")}
             type="text"
-            placeholder="Name of the member"
+            placeholder="Име на членот"
             className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
           />
         </div>
@@ -118,7 +122,7 @@ const AddMember = () => {
             value={inputField.mobileNo}
             onChange={(event) => handleOnChange(event, "mobileNo")}
             type="tel"
-            placeholder="Phone number"
+            placeholder="Телефонски број"
             className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
           />
         </div>
@@ -130,7 +134,7 @@ const AddMember = () => {
             value={inputField.address}
             onChange={(event) => handleOnChange(event, "address")}
             type="text"
-            placeholder="Address"
+            placeholder="Адреса"
             className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
           />
         </div>
@@ -169,7 +173,7 @@ const AddMember = () => {
         <div className="relative">
           <label className="flex items-center gap-2 text-slate-700 font-medium mb-1">
             <FaImage />
-            Upload Photo
+            Прикачете фотографија
           </label>
           <input
             type="file"
@@ -182,9 +186,9 @@ const AddMember = () => {
         <div
           onClick={() => handleRegisterButton()}
           type="submit"
-          className="mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg transition-colors"
+          className="mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg transition-colors cursor-pointer"
         >
-          Register Member
+          Регистрирај член
         </div>
       </form>
       <ToastContainer />
