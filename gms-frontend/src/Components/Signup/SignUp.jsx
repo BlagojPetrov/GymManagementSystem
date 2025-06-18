@@ -46,7 +46,7 @@ const SignUp = () => {
     await axios
       .post("http://localhost:4000/auth/register", inputField)
       .then((resp) => {
-        const successMsg = resp.data.message;
+        const successMsg = "Успешна регистрација!";
         toast.success(successMsg);
       })
       .catch((err) => {
