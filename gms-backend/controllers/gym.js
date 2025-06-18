@@ -72,7 +72,12 @@ exports.login = async (req, res) => {
 
       res.cookie("cookie_token", token, cookieOptions);
 
-      res.json({ message: "Logged in successfully", success: "true", gym, token });
+      res.json({
+        message: "Logged in successfully",
+        success: "true",
+        gym,
+        token,
+      });
     } else {
       // Wrong username or password
       res.status(400).json({ error: "Invalid credentials" });
@@ -113,25 +118,25 @@ exports.sendOtp = async (req, res) => {
 
       // Prepare email options
       const mailOptions = {
-        from: "petrovblaze48@gmail.com", // Sender email (must match authenticated one)
+        from: "petrovblaze48@gmail.com",
         to: email,
-        subject: "Password Reset Request",
-        text: `Your OTP is: ${token}`, // Fallback plain text
+        subject: "Барање за ресетирање на лозинка",
+        text: `Вашиот OTP код е: ${token}`,
         html: `
-          <div style="font-family: Arial, sans-serif; padding: 20px;">
-            <h2 style="color: #333;">Password Reset Request</h2>
-            <p>Dear user,</p>
-            <p>We received a request to reset your password for your Gym Management System account.</p>
-            <p>Please use the following OTP code to proceed:</p>
-            <p style="font-size: 24px; font-weight: bold; color: #2e86de; text-align: center; letter-spacing: 2px;">
-              ${token}
-            </p>
-            <p>This code is valid for the next <strong>1 hour</strong>.</p>
-            <p>If you did not request a password reset, please ignore this email.</p>
-            <br/>
-            <p>Best regards,<br/>Gym Management System Team</p>
-          </div>
-        `,
+    <div style="font-family: Arial, sans-serif; padding: 20px;">
+      <h2 style="color: #333;">Барање за ресетирање на лозинка</h2>
+      <p>Почитуван корисник,</p>
+      <p>Го примивме вашето барање за ресетирање на лозинката за вашиот профил во Gym Management System.</p>
+      <p>Ве молиме искористете го следниот OTP код за да продолжите:</p>
+      <p style="font-size: 24px; font-weight: bold; color: #2e86de; text-align: center; letter-spacing: 2px;">
+        ${token}
+      </p>
+      <p>Овој код е валиден следниот <strong>1 час</strong>.</p>
+      <p>Ако не сте побарале ресетирање на лозинката, ве молиме игнорирајте го овој меил.</p>
+      <br/>
+      <p>Со почит,<br/>Тимот на Gym Management System</p>
+    </div>
+  `,
       };
 
       // Send the email
