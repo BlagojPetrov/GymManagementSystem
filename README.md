@@ -1,4 +1,4 @@
-# Gym Management System (GMS)
+# 🏋️ Gym Management System (GMS)
 
 A full-stack Gym Management System built with the **MERN** stack (MongoDB, Express.js, React.js, Node.js) and styled with Tailwind CSS.
 
@@ -6,12 +6,12 @@ A full-stack Gym Management System built with the **MERN** stack (MongoDB, Expre
 
 ## ⚙️ Tech Stack
 
-- **Frontend:** React, React Router, Axios, Vite, Tailwind CSS (Bootstrap optional)  
+- **Frontend:** React, React Router, Axios, Vite, Tailwind CSS *(Bootstrap optional)*  
 - **Backend:** Node.js, Express.js  
 - **Database:** MongoDB (MongoDB Atlas for production)  
 - **Authentication:** JWT + bcryptjs  
-- **Validation & Middleware:** Express Validator (optional), CORS  
-- **API Documentation:** Swagger (swagger-jsdoc + swagger-ui-express)  
+- **Validation & Middleware:** Express Validator *(optional)*, CORS  
+- **API Documentation:** Swagger (`swagger-jsdoc` + `swagger-ui-express`)  
 - **Deployment:** Docker, Docker Compose, [Vercel / Render / Netlify / Heroku]  
 
 ---
@@ -24,7 +24,22 @@ A full-stack Gym Management System built with the **MERN** stack (MongoDB, Expre
 - 📊 Dashboard with statistics and visual charts  
 - 🔒 Secure JWT-based authentication  
 - 📂 RESTful API with Swagger documentation  
-- 🧹 `/db` endpoint for resetting or seeding the database (for dev use)  
+- 🧹 `/db` endpoint for resetting or seeding the database *(dev only)*  
+
+---
+
+## 🖼️ Screenshots
+
+> Add your screenshots inside `assets/screenshots/` folder and link them below:
+
+### 🧑‍💼 Admin Dashboard
+![Admin Dashboard](./assets/screenshots/admin-dashboard.png)
+
+### 📋 Member Management
+![Member Management](./assets/screenshots/member-management.png)
+
+### 📈 Statistics
+![Statistics](./assets/screenshots/statistics.png)
 
 ---
 
