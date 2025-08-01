@@ -6,7 +6,7 @@ A full-stack Gym Management System built with the **MERN** stack (MongoDB, Expre
 
 ## ⚙️ Tech Stack
 
-- **Frontend:** React, React Router, Axios, Vite, Tailwind CSS *(Bootstrap optional)*  
+- **Frontend:** React, React Router, Axios, Vite, Tailwind CSS
 - **Backend:** Node.js, Express.js  
 - **Database:** MongoDB (MongoDB Atlas for production)  
 - **Authentication:** JWT + bcryptjs  
