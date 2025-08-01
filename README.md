@@ -30,16 +30,17 @@ A full-stack Gym Management System built with the **MERN** stack (MongoDB, Expre
 
 ## 🖼️ Screenshots
 
-> Add your screenshots inside `assets/screenshots/` folder and link them below:
+### 🔐 Login Page
+![Login Page](./gms-frontend/public/screenshots/login-page.png)
 
 ### 🧑‍💼 Admin Dashboard
-![Admin Dashboard](./assets/screenshots/admin-dashboard.png)
+![Admin Dashboard](./gms-frontend/public/screenshots/admin-dashboard.png)
 
 ### 📋 Member Management
-![Member Management](./assets/screenshots/member-management.png)
+![Member Management](./gms-frontend/public/screenshots/member-management.png)
 
-### 📈 Statistics
-![Statistics](./assets/screenshots/statistics.png)
+### 📄 Member Details
+![Member Details](./gms-frontend/public/screenshots/member-details.png)
 
 ---
 
