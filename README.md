@@ -46,8 +46,93 @@ A full-stack Gym Management System built with the **MERN** stack (MongoDB, Expre
 
 ## 🐳 Running Locally
 
-### 1. Clone the repository
+Follow these steps to run the Gym Management System on your local machine using the MERN stack:
+
+---
+
+### 1. **Clone the repository**
 
 ```bash
 git clone https://github.com/BlagojPetrov/GymManagementSystem.git
 cd GymManagementSystem
+```
+
+---
+
+### 2. **Install dependencies**
+
+#### Backend (`gms-backend`)
+
+```bash
+cd gms-backend
+npm install
+```
+
+#### Frontend (`gms-frontend`)
+
+```bash
+cd ../gms-frontend
+npm install
+```
+
+---
+
+### 3. **Set up environment variables**
+
+#### In `gms-backend/.env`, create the following:
+
+```env
+PORT=4000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+```
+
+> Replace `your_mongodb_connection_string` with your MongoDB Atlas URI or local MongoDB connection, and `your_jwt_secret` with a random secure string.
+
+---
+
+#### In `gms-frontend/.env`, create the following:
+
+```env
+VITE_API_URL=http://localhost:4000/api
+```
+
+---
+
+### 4. **Run the backend server**
+
+```bash
+cd gms-backend
+npm start
+```
+
+- You should see:
+  ```
+  Server is running on port 4000
+  DB connection successfully
+  ```
+
+---
+
+### 5. **Run the frontend server**
+
+```bash
+cd ../gms-frontend
+npm run dev
+```
+
+- You should see something like:
+
+  ```
+  VITE v6.3.5  ready in 624 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+  ```
+
+---
+
+### 6. **Open the app**
+
+Go to [http://localhost:5173](http://localhost:5173) in your browser to view the application.
